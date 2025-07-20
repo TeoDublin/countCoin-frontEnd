@@ -1,6 +1,15 @@
-.w-300p{
-    width: 300px;
+$primary: #286CA1;
+
+@use "bootstrap/scss/bootstrap" with (
+  $primary: $primary
+);
+
+.w-300p {
+  width: 300px;
 }
-.h-300p{
-    height: 300px;
+.h-300p {
+  height: 300px;
+}
+.bg-gradient-primary {
+  background: linear-gradient(135deg, lighten($primary,80%), darken($primary, 30%));
 }

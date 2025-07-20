@@ -1,38 +1,33 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './login.html',
+  imports: [FormsModule]
 })
+
 export class Login {
   username = '';
-  message = '';
+  password = '';
 
   constructor(private http: HttpClient) {}
 
-  loading = false;
-
   login() {
-    this.loading = true;
-    this.message = '';
-    this.http.post<any>('/api/login', { username: this.username.trim() }).subscribe({
-      next: res => {
-        this.message = res.response === 'logged-in'
-          ? `Welcome, ${res.username}!`
-          : 'Invalid username';
+    const payload = {
+      username: this.username,
+      password: this.password
+    };
+
+    this.http.post('http://localhost:8080/api/login', payload).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
       },
-      error: () => {
-        this.message = 'Server error';
-      },
-      complete: () => {
-        this.loading = false;
+      error: (error) => {
+        alert('Login failed. Please check your credentials.');
+        console.error(error);
       }
     });
   }
-
 }
