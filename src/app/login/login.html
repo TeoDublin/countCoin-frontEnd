@@ -1,1 +1,5 @@
-<p>login works!</p>
+<div class="login-form">
+  <input [(ngModel)]="username" placeholder="Enter username" />
+  <button (click)="login()">Login</button>
+  <p *ngIf="message">{{ message }}</p>
+</div>
